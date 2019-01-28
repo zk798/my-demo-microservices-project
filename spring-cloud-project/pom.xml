@@ -15,6 +15,7 @@
         <module>spring-cloud-service-application</module>
         <module>spring-cloud-client-application</module>
         <module>spring-cloud-client-circuit-application</module>
+        <module>spring-cloud-client-feign-application</module>
     </modules>
 
     <properties>
