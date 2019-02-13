@@ -6,6 +6,8 @@
     <modules>
         <module>spring-cloud-project</module>
         <module>rpc-project</module>
+        <module>classload-project</module>
+        <module>nio-project</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -18,7 +20,7 @@
     <artifactId>my-demo-microservices-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>my-demo-microservices-project</name>
-    <description>Demo project for Spring Boot</description>
+    <description>com.zrs.classload.Demo project for Spring Boot</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

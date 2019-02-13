@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface SayingService {
 
     @GetMapping("/say")
-    public String say(@RequestParam("name") String name);
+    public String say(@RequestParam/*("name")*/ String name);
 }
