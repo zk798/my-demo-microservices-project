@@ -8,6 +8,7 @@
         <module>rpc-project</module>
         <module>classload-project</module>
         <module>nio-project</module>
+        <module>arithmetic-project</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
