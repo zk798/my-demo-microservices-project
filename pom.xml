@@ -8,6 +8,8 @@
         <module>rpc-project</module>
         <module>classload-project</module>
         <module>nio-project</module>
+        <module>mydemo-project</module>
+        <module>db-project</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
