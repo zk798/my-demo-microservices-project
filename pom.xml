@@ -11,6 +11,8 @@
         <module>arithmetic-project</module>
         <module>mydemo-project</module>
         <module>db-project</module>
+        <module>concurrent-project</module>
+        <module>spring-boot-project</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
