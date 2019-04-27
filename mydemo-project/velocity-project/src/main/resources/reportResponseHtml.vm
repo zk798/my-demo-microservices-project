@@ -1,0 +1,1608 @@
+#set($ReportMessage= $cfxx)
+<div class="page-header center">
+	<h3>个人信用报告</h3>
+</div>
+<div class="row">
+	#set($reportBasics= $ReportMessage.reportBasics)
+	<div class="col-xs-12">
+		#if($!ReportMessage.reportBasics && $ReportMessage.reportBasics != '{}')
+		<ul class="list-inline" style="display: flex;justify-content:space-between;">
+			<li class="blue">报告编号：<b>$reportBasics.reportId</b></li>
+			<li class="blue">查询请求时间：<b>$reportBasics.reportReqTime</b></li>
+			<li class="blue">报告时间：<b>$reportBasics.reportTime</b></li>
+		</ul>
+		#end
+
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">被查询者姓名</th>
+				<th class="center">被查询者证件类型</th>
+				<th class="center">被查询者证件号码</th>
+				<th class="center">查询操作员</th>
+				<th class="center">查询原因</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$reportBasics.queryName</td>
+				<td class="center">$reportBasics.queryCertType</td>
+				<td class="center">$reportBasics.queryCredNum</td>
+				<td class="center">$reportBasics.queryOperator</td>
+				<td class="center">$reportBasics.queryReason</td>
+			</tr>
+			</tbody>
+		</table>
+		<div class="page-header center">
+			<h4>一、个人基本信息</h4>
+		</div>
+		<ul class="list-inline center">
+			<li class="blue">身份信息</li>
+		</ul>
+		#if($!ReportMessage.identityInfo && $ReportMessage.identityInfo != '{}')
+		#set($identityInfo= $ReportMessage.identityInfo)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">性别</th>
+				<th class="center">出生日期</th>
+				<th class="center">婚姻状况</th>
+				<th class="center">手机号码</th>
+				<th class="center">单位电话</th>
+				<th class="center">住宅电话</th>
+				<th class="center">学历</th>
+				<th class="center">学位</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$identityInfo.gender</td>
+				<td class="center">$identityInfo.dateOfBirth</td>
+				<td class="center">$identityInfo.maritalStatus</td>
+				<td class="center">$identityInfo.mobilePhone</td>
+				<td class="center">$identityInfo.companyPhone</td>
+				<td class="center">$identityInfo.homePhone</td>
+				<td class="center">$identityInfo.education</td>
+				<td class="center">$identityInfo.degree</td>
+			</tr>
+			</tbody>
+			<thead>
+			<tr>
+				<th colspan="3" class="center">通讯地址</th>
+				<th colspan="5" class="center">户籍地址</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td colspan="3" class="center">$identityInfo.contactAddress</td>
+				<td colspan="5" class="center">$identityInfo.residenceAddress</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue">配偶信息</li>
+		</ul>
+		#if($!ReportMessage.spouseInfo && $ReportMessage.spouseInfo != '{}')
+		#set($spouseInfo= $ReportMessage.spouseInfo)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">姓名</th>
+				<th class="center">证件类型</th>
+				<th class="center">证件号码</th>
+				<th class="center">工作单位</th>
+				<th class="center">联系电话</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$spouseInfo.spouseName</td>
+				<td class="center">$spouseInfo.spouseCertType</td>
+				<td class="center">$spouseInfo.spouseCredNum</td>
+				<td class="center">$spouseInfo.companyName</td>
+				<td class="center">$spouseInfo.spousePhone</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue">居住信息</li>
+		</ul>
+		#if($!ReportMessage.resideInfo && $ReportMessage.resideInfo != '[]')
+		#set($resideInfo= $vmTools.jsonToListMap($ReportMessage.resideInfo))
+		#if($resideInfo)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">居住地址</th>
+				<th class="center">居住状况</th>
+				<th class="center">信息更新日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $resideInfo)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.resideAddr</td>
+				<td class="center">$item.resideStatus</td>
+				<td class="center">$item.infoUpdateDate</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		#end
+		<ul class="list-inline center">
+			<li class="blue">职业信息</li>
+		</ul>
+		#if($!ReportMessage.occupationInfo && $ReportMessage.occupationInfo != '[]')
+		#set($occupationInfo= $vmTools.jsonToListMap($ReportMessage.occupationInfo))
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center" colspan="4">工作单位</th>
+				<th class="center" colspan="2">单位地址</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $occupationInfo)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center" colspan="4">$item.companyName</td>
+				<td class="center" colspan="2">$item.companyAddress</td>
+			</tr>
+			#end
+			</tbody>
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">职业</th>
+				<th class="center">行业</th>
+				<th class="center">职务</th>
+				<th class="center">职称</th>
+				<th class="center">进入本单位年份</th>
+				<th class="center">信息更新日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $occupationInfo)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.occupation</td>
+				<td class="center">$item.companyType</td>
+				<td class="center">$item.position</td>
+				<td class="center">$item.postTitle</td>
+				<td class="center">$item.employedYear</td>
+				<td class="center">$item.infoUpdateDate</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		
+		<div class="page-header center">
+			<h4>二、信息概要</h4>
+		</div>
+		<ul class="list-inline center">
+			<li class="blue"><h5>（一）信用提示</h5></li>
+		</ul>
+		#if($!ReportMessage.ct && $ReportMessage.ct != '{}')
+		#set($ct= $ReportMessage.ct)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">个人住房贷款笔数</th>
+				<th class="center">个人商用房（包括商住两用）贷款笔数</th>
+				<th class="center">其他贷款笔数</th>
+				<th class="center">首笔贷款发放月份</th>
+				<th class="center">贷记卡账户数</th>
+				<th class="center">首张贷记卡发卡月份</th>
+				<th class="center">准贷记卡账户数</th>
+				<th class="center">首张准贷记卡发卡月份</th>
+				<th class="center">本人声明数目</th>
+				<th class="center">异议标注数目</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$ct.housingLoanNum</td>
+				<td class="center">$ct.commercialLoanNum</td>
+				<td class="center">$ct.otherLoanNum</td>
+				<td class="center">$ct.firstLoanMonth</td>
+				<td class="center">$ct.debitAccountNum</td>
+				<td class="center">$ct.firstDebitMonth</td>
+				<td class="center">$ct.semiCreditNum</td>
+				<td class="center">$ct.firstSemiCreditMonth</td>
+				<td class="center">$ct.declareNum</td>
+				<td class="center">$ct.objectionLabelNum</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue"><h5>（二） 逾期及违约信息概要</h5></li>
+		</ul>
+		#if($!ReportMessage.ods && $ReportMessage.ods != '{}')
+		#set($ods= $ReportMessage.ods)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th colspan="2" class="center">呆账信息汇总</th>
+				<th colspan="2" class="center">资产处置信息汇总</th>
+				<th colspan="2" class="center">保证人代偿信息汇总</th>
+			</tr>
+			<tr>
+				<th class="center">笔数</th>
+				<th class="center">余额</th>
+				<th class="center">笔数</th>
+				<th class="center">余额</th>
+				<th class="center">笔数</th>
+				<th class="center">余额</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$ods.badInforSummary.num</td>
+				<td class="center">$ods.badInforSummary.balance</td>
+				<td class="center">$ods.assetDisposalInforSummary.num</td>
+				<td class="center">$ods.assetDisposalInforSummary.balance</td>
+				<td class="center">$ods.compensationInforSummary.num</td>
+				<td class="center">$ods.compensationInforSummary.balance</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue">逾期（透支）信息汇总</li>
+		</ul>
+		#if($!ReportMessage.oods && $ReportMessage.oods != '{}')
+		#set($oods= $ReportMessage.oods)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th colspan="4" class="center">贷款逾期</th>
+				<th colspan="4" class="center">贷记卡逾期</th>
+				<th colspan="4" class="center">准贷记卡60天以上透支</th>
+			</tr>
+			<tr>
+				<th class="center">笔数</th>
+				<th class="center">月份数</th>
+				<th class="center">单月最高逾期总额</th>
+				<th class="center">最长逾期月数</th>
+				<th class="center">账户数</th>
+				<th class="center">月份数</th>
+				<th class="center">单月最高逾期总额</th>
+				<th class="center">最长逾期月数</th>
+				<th class="center">账户数</th>
+				<th class="center">月份数</th>
+				<th class="center">单月最高透支余额</th>
+				<th class="center">最长透支月数</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$oods.overdueLoan.num</td>
+				<td class="center">$oods.overdueLoan.monthNum</td>
+				<td class="center">$oods.overdueLoan.overdueAmount</td>
+				<td class="center">$oods.overdueLoan.longestOverdueMonth</td>
+				<td class="center">$oods.overdueCredit.accountNum</td>
+				<td class="center">$oods.overdueCredit.monthNum</td>
+				<td class="center">$oods.overdueCredit.overdueAmount</td>
+				<td class="center">$oods.overdueCredit.longestOverdueMonth</td>
+				<td class="center">$oods.quasiCreditOverdraftMore60Days.accountNum</td>
+				<td class="center">$oods.quasiCreditOverdraftMore60Days.monthNum</td>
+				<td class="center">$oods.quasiCreditOverdraftMore60Days.overdraftAmount</td>
+				<td class="center">$oods.quasiCreditOverdraftMore60Days.longestOverdraftMonth</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue"><h5>（三） 授信及负债信息概要</h5></li>
+		</ul>
+		<ul class="list-inline center">
+			<li class="blue">未结清贷款信息汇总</li>
+		</ul>
+		#if($!ReportMessage.ols && $ReportMessage.ols != '{}')
+		#set($ols= $ReportMessage.ols)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">贷款法人机构数</th>
+				<th class="center">贷款机构数</th>
+				<th class="center">笔数</th>
+				<th class="center">合同总额</th>
+				<th class="center">余额</th>
+				<th class="center">最近6个月平均应还款</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$ols.loanCorporationNum</td>
+				<td class="center">$ols.loanInstitutionsNum</td>
+				<td class="center">$ols.num</td>
+				<td class="center">$ols.contractAmount</td>
+				<td class="center">$ols.balance</td>
+				<td class="center">$ols.averageRepayment</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue">未销户贷记卡信息汇总</li>
+		</ul>
+		#if($!ReportMessage.ncs && $ReportMessage.ncs != '{}')
+		#set($ncs= $ReportMessage.ncs)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">发卡法人机构数</th>
+				<th class="center">发卡机构数</th>
+				<th class="center">账户数</th>
+				<th class="center">授信总额</th>
+				<th class="center">单家行最高授信额</th>
+				<th class="center">单家行最低授信额</th>
+				<th class="center">已用额度</th>
+				<th class="center">最近6个月平均使用额度</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$ncs.cardlLegalIssuerNum</td>
+				<td class="center">$ncs.cardIssuerNum</td>
+				<td class="center">$ncs.accountNum</td>
+				<td class="center">$ncs.totalCredit</td>
+				<td class="center">$ncs.maxCredit</td>
+				<td class="center">$ncs.minCredit</td>
+				<td class="center">$ncs.usedMmount</td>
+				<td class="center">$ncs.averageUsage</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue">未销户准贷记卡信息汇总</li>
+		</ul>
+		#if($!ReportMessage.nqcs && $ReportMessage.nqcs != '{}')
+		#set($nqcs= $ReportMessage.nqcs)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">发卡法人机构数</th>
+				<th class="center">发卡机构数</th>
+				<th class="center">账户数</th>
+				<th class="center">授信总额</th>
+				<th class="center">单家行最高授信额</th>
+				<th class="center">单家行最低授信额</th>
+				<th class="center">透支余额</th>
+				<th class="center">最近6个月平均透支余额</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$nqcs.cardlLegalIssuerNum</td>
+				<td class="center">$nqcs.cardIssuerNum</td>
+				<td class="center">$nqcs.accountNum</td>
+				<td class="center">$nqcs.totalCredit</td>
+				<td class="center">$nqcs.maxCredit</td>
+				<td class="center">$nqcs.minCredit</td>
+				<td class="center">$nqcs.overdraftBalance</td>
+				<td class="center">$nqcs.last6MonthsAveOverBalan</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue">对外担保信息汇总</li>
+		</ul>
+		#if($!ReportMessage.gs && $ReportMessage.gs != '{}')
+		#set($gs= $ReportMessage.gs)
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">担保笔数</th>
+				<th class="center">担保金额</th>
+				<th class="center">担保本金余额</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">$gs.guaranteeNum</td>
+				<td class="center">$gs.guaranteeAmount</td>
+				<td class="center">$gs.guaranteePrincipal</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+		
+		
+		
+		<div class="page-header center">
+			<h4>三 信贷交易信息明细</h4>
+		</div>
+		<ul class="list-inline center">
+			<li class="blue"><h5>（一）资产处置信息</h5></li>
+		</ul>
+		#if($!ReportMessage.adiList && $ReportMessage.adiList != '[]')
+		#set($adiList= $vmTools.jsonToListMap($ReportMessage.adiList))
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">资产管理公司</th>
+				<th class="center">债务接收日期</th>
+				<th class="center">接收的债权金额</th>
+				<th class="center">最近一次还款日期</th>
+				<th class="center">余额</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $adiList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.manageCompany</td>
+				<td class="center">$item.debtAcceptDate</td>
+				<td class="center">$item.receivedAmount</td>
+				<td class="center">$item.lastRepayDate</td>
+				<td class="center">$item.balance</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		<ul class="list-inline center">
+			<li class="blue">（二）保证人代偿信息</li>
+		</ul>
+		#if($!ReportMessage.gciList && $ReportMessage.gciList != '[]')
+		#set($gciList= $vmTools.jsonToListMap($ReportMessage.gciList))
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">代偿机构</th>
+				<th class="center">最近一次代偿日期</th>
+				<th class="center">累计代偿金额</th>
+				<th class="center">最近一次还款日期</th>
+				<th class="center">余额</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $gciList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.compenOrganization</td>
+				<td class="center">$item.lastCompenDate</td>
+				<td class="center">$item.cumulativeCompenAmount</td>
+				<td class="center">$item.lastRepayDate</td>
+				<td class="center">$item.balance</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		
+		<ul class="list-inline center">
+			<li class="blue">（三）贷款</li>
+		</ul>
+		#if($!ReportMessage.loanInfo && $ReportMessage.loanInfo != '[]')
+		#set($loanInfo= $vmTools.jsonToListMap($ReportMessage.loanInfo))
+		#foreach($item in $loanInfo)
+		<ul class="list-inline">
+			<li class="blue">$item.titleInfo</li>
+		</ul>
+		<table class="table table-bordered">
+			#if($item.accountStatus)
+			<thead>
+			<tr>
+			    <th class="center" colspan="3">账户状态</th>
+				<th class="center" colspan="3">五级分类</th>
+				<th class="center" colspan="3">本金余额</th>
+				<th class="center" colspan="3">剩余还款期数</th>
+				<th class="center" colspan="3">本月应还款</th>
+				<th class="center" colspan="4">应还款日</th>
+				<th class="center" colspan="4">本月实还款</th>
+				<th class="center" colspan="4">最近一次还款日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			    <td class="center" colspan="3">$item.accountStatus</td>
+				<td class="center" colspan="3">$item.fiveclasscode</td>
+				<td class="center" colspan="3">$item.principalAmount</td>
+				<td class="center" colspan="3">$item.remainRepayNum</td>
+				<td class="center" colspan="3">$item.thisMonthRepayAmount</td>
+				<td class="center" colspan="4">$item.repayDate</td>
+				<td class="center" colspan="4">$item.thisMonthActualRepayAmount</td>
+				<td class="center" colspan="4">$item.lastRepayDate</td>
+			</tr>
+			</tbody>
+			#end
+
+			#if($item.currentOverdueNum && $item.currentOverdueAmount && $item.overdue31To60Days &&
+			$item.overdue61To90Days && $item.overdue91To180Days && $item.overdue180Days)
+			<thead>
+			<tr>
+				<th class="center" colspan="4">当前逾期期数</th>
+				<th class="center" colspan="4">当前逾期金额</th>
+				<th class="center" colspan="4">逾期31-60天未还本金</th>
+				<th class="center" colspan="4">逾期61-90天未还本金</th>
+				<th class="center" colspan="4">逾期91-180天未还本金</th>
+				<th class="center" colspan="4">逾期180天以上未还本金</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center" colspan="4">$item.currentOverdueNum</td>
+				<td class="center" colspan="4">$item.currentOverdueAmount</td>
+				<td class="center" colspan="4">$item.overdue31To60Days</td>
+				<td class="center" colspan="4">$item.overdue61To90Days</td>
+				<td class="center" colspan="4">$item.overdue91To180Days</td>
+				<td class="center" colspan="4">$item.overdue180Days</td>
+			</tr>
+			</tbody>
+			#end
+
+			#set($overdueDataList= $vmTools.jsonToListMap($item.overdueDataList))
+			#if($item.overdueDataList)
+			<thead>
+			<tr>
+				<td class="center" colspan="24">$item.overTitleInfo</td>
+			</tr>
+			<tr>
+				<th class="center" colspan="8">逾期月份</th>
+				<th class="center" colspan="8">逾期持续月份</th>
+				<th class="center" colspan="8">逾期金额</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($overdueItem in $overdueDataList)
+			<tr>
+				<td class="center" colspan="8">$overdueItem.overdueMonth</td>
+				<td class="center" colspan="8">$overdueItem.overdueContMonths</td>
+				<td class="center" colspan="8">$overdueItem.overdueAmount</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+			
+			#set($lendingDescriptionList= $vmTools.jsonToListMap($item.lendingDescriptionList))
+			#if($item.lendingDescriptionList)
+			<thead>
+			<tr>
+				<th class="center" colspan="20">贷款机构说明</th>
+				<th class="center" colspan="4">添加日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($lendingItem in $lendingDescriptionList)
+			<tr>
+				<td class="center" colspan="20">$lendingItem.lendContent</td>
+				<td class="center" colspan="4">$lendingItem.addDate</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+			
+			#set($objectionLabelList= $vmTools.jsonToListMap($item.objectionLabelList))
+			#if($item.objectionLabelList)
+			<thead>
+			<tr>
+				<th class="center" colspan="20">异议标注</th>
+				<th class="center" colspan="4">添加日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($objectionItem in $objectionLabelList)
+			<tr>
+				<td class="center" colspan="20">$objectionItem.lableContent</td>
+				<td class="center" colspan="4">$objectionItem.addDate</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+
+			#set($specTraDataList= $vmTools.jsonToListMap($item.specTraDataList))
+			#if($item.specTraDataList)
+			<thead>
+			<tr>
+				<th class="center" colspan="8">特殊交易类型</th>
+				<th class="center" colspan="4">发生日期</th>
+				<th class="center" colspan="4">变更月数</th>
+				<th class="center" colspan="4">发生金额</th>
+				<th class="center" colspan="4">明细记录</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($specItem in $specTraDataList)
+			<tr>
+				<td class="center" colspan="8">$specItem.specTraType</td>
+				<td class="center" colspan="4">$specItem.specTraDate</td>
+				<td class="center" colspan="4">$specItem.specTraChanMonthNum</td>
+				<td class="center" colspan="4">$specItem.specTraAmount</td>
+				<td class="center" colspan="4">$specItem.specTraDetailed</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+
+			#if($item.month24RepayTitle)
+			<thead>
+			<tr>
+				<th class="center" colspan="24">$item.month24RepayTitle</th>
+			</tr>
+			</thead>
+			#end
+			<tbody>
+			<tr>
+				#if($item.month24RepayStatus)
+				#foreach($n in $item.month24RepayStatus.split(" "))
+				<td class="center">$n</td>
+				#end
+				#end
+				#if(!$item.month24RepayStatus)
+				#foreach($n in [0..23])
+				<td class="center">--</td>
+				#end
+				#end
+			</tr>
+			</tbody>
+		</table>
+		#end
+		#end
+
+		<ul class="list-inline center">
+			<li class="blue"><h5>（四）贷记卡</h5></li>
+		</ul>
+		#if($!ReportMessage.creditCardInfo && $ReportMessage.creditCardInfo != '[]')
+		#set($creditCardInfo= $vmTools.jsonToListMap($ReportMessage.creditCardInfo))
+		#foreach($item in $creditCardInfo)
+		<ul class="list-inline">
+			<li class="blue">$item.titleInfo</li>
+		</ul>
+		<table class="table table-bordered">
+			#if($item.accountStatus)
+			<thead>
+			<tr>
+				<th class="center" colspan="4">账户状态</th>
+				<th class="center" colspan="4">已用额度</th>
+				<th class="center" colspan="8">最近6个月平均使用额度</th>
+				<th class="center" colspan="4">最大使用额度</th>
+				<th class="center" colspan="4">本月应还款</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center" colspan="4">$item.accountStatus</td>
+				<td class="center" colspan="4">$item.usedMmount</td>
+				<td class="center" colspan="8">$item.averageUsage</td>
+				<td class="center" colspan="4">$item.maxUsedCreditLimit</td>
+				<td class="center" colspan="4">$item.thisMonthRepayAmount</td>
+			</tr>
+			</tbody>
+			#end
+
+			#if($item.billingDate )
+			<thead>
+			<tr>
+				<th class="center" colspan="4">账单日</th>
+				<th class="center" colspan="4">本月实还款</th>
+				<th class="center" colspan="8">最近一次还款日期</th>
+				<th class="center" colspan="4">当前逾期期数</th>
+				<th class="center" colspan="4">当前逾期金额</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center" colspan="4">$item.billingDate</td>
+				<td class="center" colspan="4">$item.thisMonthActualRepayAmount</td>
+				<td class="center" colspan="8">$item.lastRepayDate</td>
+				<td class="center" colspan="4">$item.currentOverdueNum</td>
+				<td class="center" colspan="4">$item.currentOverdueAmount</td>
+			</tr>
+			</tbody>
+			#end
+			#set($overdueDataList= $vmTools.jsonToListMap($item.overdueDataList))
+			#if($item.overdueDataList)
+			<thead>
+			<tr>
+				<td class="center" colspan="24">$item.overTitleInfo</td>
+			</tr>
+			<tr>
+				<th class="center" colspan="8">逾期月份</th>
+				<th class="center" colspan="8">逾期持续月份</th>
+				<th class="center" colspan="8">逾期金额</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($overdueItem in $overdueDataList)
+			<tr>
+				<td class="center" colspan="8">$overdueItem.overdueMonth</td>
+				<td class="center" colspan="8">$overdueItem.overdueContMonths</td>
+				<td class="center" colspan="8">$overdueItem.overdueAmount</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+			#set($specTraDataList= $vmTools.jsonToListMap($item.specTraDataList))
+			#if($item.specTraDataList)
+			<thead>
+			<tr>
+				<th class="center" colspan="8">特殊交易类型</th>
+				<th class="center" colspan="4">发生日期</th>
+				<th class="center" colspan="4">变更月数</th>
+				<th class="center" colspan="4">发生金额</th>
+				<th class="center" colspan="4">明细记录</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $specTraDataList)
+			<tr>
+				<td class="center" colspan="8">$item.specTraType</td>
+				<td class="center" colspan="4">$item.specTraDate</td>
+				<td class="center" colspan="4">$item.specTraChanMonthNum</td>
+				<td class="center" colspan="4">$item.specTraAmount</td>
+				<td class="center" colspan="4">$item.specTraDetailed</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+			
+			#set($cardIssuingCommentList= $vmTools.jsonToListMap($item.cardIssuingCommentList))
+			#if($item.cardIssuingCommentList)
+			<thead>
+			<tr>
+				<th class="center" colspan="20">发卡机构说明</th>
+				<th class="center" colspan="4">添加日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $cardIssuingCommentList)
+			<tr>
+				<td class="center" colspan="20">$item.cardIssComment</td>
+				<td class="center" colspan="4">$item.addDate</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+			
+			#if($item.month24RepayTitle)
+			<thead>
+			<tr>
+				<th class="center" colspan="24">$item.month24RepayTitle</th>
+			</tr>
+			</thead>
+			#end
+
+			<tbody>
+			<tr>
+				#if($item.month24RepayTitle)
+				#foreach($n in $item.month24RepayStatus.split(" "))
+				<td class="center">$n</td>
+				#end
+				#end
+				#if(!$item.month24RepayStatus)
+				#foreach($n in [0..23])
+				<td class="center">--</td>
+				#end
+				#end
+			</tr>
+			</tbody>
+
+		</table>
+		#end
+		#end
+
+		#set($quasiCreditCard= $vmTools.jsonToListMap($ReportMessage.quasiCreditCard))
+		<ul class="list-inline center">
+			<li class="blue"><h5>（五）准贷记卡</h5></li>
+		</ul>
+
+		#if($!ReportMessage.quasiCreditCard && $ReportMessage.quasiCreditCard != '[]')
+		#foreach($item in $quasiCreditCard)
+		<ul class="list-inline">
+			<li class="blue">$item.titleInfo</li>
+		</ul>
+		<table class="table table-bordered">
+			#if($item.accountStatus && $item.overdraftBalance && $item.last6MonthsAveOverBalan && $item.maxOverBalan
+			&& $item.billingDate)
+			<thead>
+			<tr>
+				<th class="center" colspan="3">账户状态</th>
+				<th class="center" colspan="3">透支额度</th>
+				<th class="center" colspan="3">最近6个月平均透支余额</th>
+				<th class="center" colspan="3">最大透支余额</th>
+				<th class="center" colspan="3">账单日</th>
+				<th class="center" colspan="3">本月实还款</th>
+				<th class="center" colspan="3">最近一次还款日期</th>
+				<th class="center" colspan="3">透支180以上未付余额</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center" colspan="3">$item.accountStatus</td>
+				<td class="center" colspan="3">$item.overdraftBalance</td>
+				<td class="center" colspan="3">$item.last6MonthsAveOverBalan</td>
+				<td class="center" colspan="3">$item.maxOverBalan</td>
+				<td class="center" colspan="3">$item.billingDate</td>
+				<td class="center" colspan="3">$item.thisMonthActualRepayAmount</td>
+				<td class="center" colspan="3">$item.lastRepayDate</td>
+				<td class="center" colspan="3">$item.overOver180UnpaidBalan</td>
+			</tr>
+			</tbody>
+			#end
+			
+			#set($overdraftRecordList= $vmTools.jsonToListMap($item.overdraftRecordList))
+			#if($item.overdraftRecordList)
+			<thead>
+			<tr>
+				<td class="center" colspan="24">$item.overdrafTitleInfo</td>
+			</tr>
+			<tr>
+				<th class="center" colspan="8">透支月份</th>
+				<th class="center" colspan="8">透支持续月数</th>
+				<th class="center" colspan="8">透支金额</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $overdraftRecordList)
+			<tr>
+				<td class="center" colspan="8">$item.overdraftMonth</td>
+				<td class="center" colspan="8">$item.overdraftContMonths</td>
+				<td class="center" colspan="8">$item.overdraftAmount</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+			
+			#set($cardIssuingCommentList= $vmTools.jsonToListMap($item.cardIssuingCommentList))
+			#if($item.cardIssuingCommentList)
+			<thead>
+			<tr>
+				<th class="center" colspan="20">发卡机构说明</th>
+				<th class="center" colspan="4">添加日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $cardIssuingCommentList)
+			<tr>
+				<td class="center" colspan="20">$item.cardIssComment</td>
+				<td class="center" colspan="4">$item.addDate</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+			
+			#set($specTraDataList= $vmTools.jsonToListMap($item.specTraDataList))
+			#if($item.specTraDataList)
+			<thead>
+			<tr>
+				<th class="center" colspan="8">特殊交易类型</th>
+				<th class="center" colspan="4">发生日期</th>
+				<th class="center" colspan="4">变更月数</th>
+				<th class="center" colspan="4">发生金额</th>
+				<th class="center" colspan="4">明细记录</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $specTraDataList)
+			<tr>
+				<td class="center" colspan="8">$item.specTraType</td>
+				<td class="center" colspan="4">$item.specTraDate</td>
+				<td class="center" colspan="4">$item.specTraChanMonthNum</td>
+				<td class="center" colspan="4">$item.specTraAmount</td>
+				<td class="center" colspan="4">$item.specTraDetailed</td>
+			</tr>
+			#end
+			</tbody>
+			#end
+
+			#if($item.month24RepayTitle)
+			<thead>
+			<tr>
+				<th class="center" colspan="24">$item.month24RepayTitle</th>
+			</tr>
+			</thead>
+			#end
+			<tbody>
+			<tr>
+				#if($item.month24RepayStatus)
+				#foreach($n in $item.month24RepayStatus.split(" "))
+				<td class="center">$n</td>
+				#end
+				#end
+				#if(!$item.month24RepayStatus)
+				#foreach($n in [0..23])
+				<td class="center">--</td>
+				#end
+				#end
+			</tr>
+			</tbody>
+
+		</table>
+		#end
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue"><h5>（六）担保信息</h5></li>
+		</ul>
+		<ul class="list-inline center">
+			<li class="blue">对外贷款担保信息</li>
+		</ul>
+		#if($!ReportMessage.lgiList && $ReportMessage.lgiList != '[]')
+		#set($lgiList= $vmTools.jsonToListMap($ReportMessage.lgiList))
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">担保贷款发放机构</th>
+				<th class="center">担保贷款合同金额</th>
+				<th class="center">担保贷款发放日期</th>
+				<th class="center">担保贷款到期日期</th>
+				<th class="center">担保金额</th>
+				<th class="center">担保贷款本金余额</th>
+				<th class="center">担保贷款五级分类</th>
+				<th class="center">应还款日</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $lgiList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.loanIssueAgency</td>
+				<td class="center">$item.loanContractAmount</td>
+				<td class="center">$item.loanGrantDate</td>	
+				<td class="center">$item.loanMaturityDate</td>
+				<td class="center">$item.guaranteeAmount</td>
+				<td class="center">$item.principalBalance</td>
+				<td class="center">$item.fiveClassify</td>
+				<td class="center">$item.repayDate</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+
+		<ul class="list-inline center">
+			<li class="blue">对外信用卡担保信息</li>
+		</ul>
+		#set($csiList= $vmTools.jsonToListMap($ReportMessage.csiList))
+		#if($!ReportMessage.csiList && $ReportMessage.csiList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">担保信用卡发放机构</th>
+				<th class="center">担保信用卡授信额度</th>
+				<th class="center">担保信用卡发卡日期</th>
+				<th class="center">担保金额</th>
+				<th class="center">担保信用卡已用额度</th>
+				<th class="center">账单日</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $csiList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.creditGrantOrganize</td>
+				<td class="center">$item.creditLine</td>
+				<td class="center">$item.grantCreditDate</td>	
+				<td class="center">$item.guaranteeAmount</td>
+				<td class="center">$item.usedAmount</td>
+				<td class="center">$item.billingDate</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<div class="page-header center">
+			<h4>四 公共信息明细</h4>
+		</div>
+		<ul class="list-inline center">
+			<li class="blue">欠税记录</li>
+		</ul>
+		#set($trList= $vmTools.jsonToListMap($ReportMessage.trList))
+		#if($!ReportMessage.trList && $ReportMessage.trList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">主管税务机关</th>
+				<th class="center">欠税总额</th>
+				<th class="center">欠税统计日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $trList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.taxAuthority</td>
+				<td class="center">$item.totalTaxes</td>
+				<td class="center">$item.taxStatisticDate</td>	
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">民事判决记录</li>
+		</ul>
+		#set($cjrList= $vmTools.jsonToListMap($ReportMessage.cjrList))
+		#if($!ReportMessage.cjrList && $ReportMessage.cjrList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">立案法院</th>
+				<th class="center">案由</th>
+				<th class="center">立案日期</th>
+				<th class="center">结案方式</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $cjrList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.filingCourt</td>
+				<td class="center">$item.caseReason</td>
+				<td class="center">$item.filingDate</td>	
+				<td class="center">$item.closeWay</td>	
+			</tr>
+			#end
+			</tbody>
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">判决/调解结果</th>
+				<th class="center">判决/调解生效日期</th>
+				<th class="center">诉讼标的</th>
+				<th class="center">诉讼标的金额</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $cjrList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.decisionResults</td>
+				<td class="center">$item.decisionEffectiveDate</td>
+				<td class="center">$item.litigationSubject</td>	
+				<td class="center">$item.litigationAmount</td>	
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">强制执行记录</li>
+		</ul>
+		#set($erList= $vmTools.jsonToListMap($ReportMessage.erList))
+		#if($!ReportMessage.erList && $ReportMessage.erList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center" colspan="1">编号</th>
+				<th class="center" colspan="6">执行法院</th>
+				<th class="center" colspan="6">执行案由</th>
+				<th class="center" colspan="6">立案日期</th>
+				<th class="center" colspan="5">结案方式</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $erList)
+			<tr>
+				<td class="center" colspan="1">$item.no</td>
+				<td class="center" colspan="6">$item.executionCourt</td>
+				<td class="center" colspan="6">$item.executeReason</td>
+				<td class="center" colspan="6">$item.filingDate</td>	
+				<td class="center" colspan="5">$item.closeWay</td>	
+			</tr>
+			#end
+			</tbody>
+			<thead>
+			<tr>
+				<th class="center" colspan="1">编号</th>
+				<th class="center" colspan="3">案件状态</th>
+				<th class="center" colspan="4">结案日期</th>
+				<th class="center" colspan="4">申请执行标的</th>
+				<th class="center" colspan="4">申请执行标的价值</th>
+				<th class="center" colspan="4">已执行标的</th>
+				<th class="center" colspan="4">已执行标的金额</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $erList)
+			<tr>
+				<td class="center" colspan="1">$item.no</td>
+				<td class="center" colspan="3">$item.caseStatus</td>
+				<td class="center" colspan="4">$item.closeDate</td>
+				<td class="center" colspan="4">$item.applyExcuteSubject</td>	
+				<td class="center" colspan="4">$item.applyExcuteValue</td>	
+				<td class="center" colspan="4">$item.executedSubject</td>	
+				<td class="center" colspan="4">$item.executedSubjectAmount</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">行政处罚记录</li>
+		</ul>
+		#set($asrList= $vmTools.jsonToListMap($ReportMessage.asrList))
+		#if($!ReportMessage.asrList && $ReportMessage.asrList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">处罚机构</th>
+				<th class="center">处罚内容</th>
+				<th class="center">处罚金额</th>
+				<th class="center">生效日期</th>
+				<th class="center">截止日期</th>
+				<th class="center">行政复议结果</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $asrList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.punishInstitution</td>
+				<td class="center">$item.punishContent</td>
+				<td class="center">$item.punishAmount</td>	
+				<td class="center">$item.effectiveDate</td>
+				<td class="center">$item.endDate</td>
+				<td class="center">$item.adminReconsiderResult</td>	
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">住房公积金参缴记录</li>
+		</ul>
+		#set($hfrList= $vmTools.jsonToListMap($ReportMessage.hfrList))
+		#if($!ReportMessage.hfrList && $ReportMessage.hfrList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center" colspan="1">编号</th>
+				<th class="center" colspan="3">参缴地</th>
+				<th class="center" colspan="3">参缴日期</th>
+				<th class="center" colspan="3">初缴月份</th>
+				<th class="center" colspan="3">缴至月份</th>
+				<th class="center" colspan="2">缴费状态</th>
+				<th class="center" colspan="3">月缴存额</th>
+				<th class="center" colspan="3">个人缴存比例</th>
+				<th class="center" colspan="3">单位缴存比例</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			#foreach($item in $hfrList)
+			<tr>
+				<td class="center" colspan="1">$item.no</td>
+				<td class="center" colspan="3">$item.ginsengLand</td>
+				<td class="center" colspan="3">$item.paymentDate</td>
+				<td class="center" colspan="3">$item.initialPaymentMonth</td>	
+				<td class="center" colspan="3">$item.payToMonth</td>
+				<td class="center" colspan="2">$item.paymentStatus</td>
+				<td class="center" colspan="3">$item.depositAmount</td>	
+				<td class="center" colspan="3">$item.personalDepositRatio</td>	
+				<td class="center" colspan="3">$item.unitDepositRatio</td>	
+			</tr>
+			#end
+			</tbody>
+			<thead>
+			<tr>
+				<th class="center" colspan="1">编号</th>
+				<th class="center" colspan="13">缴费单位</th>
+				<th class="center" colspan="10">信息更新日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $hfrList)
+			<tr>
+				<td class="center" colspan="1">$item.no</td>
+				<td class="center" colspan="13">$item.paymentUnit</td>
+				<td class="center" colspan="10">$item.infoUpdateDate</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">养老保险金缴存记录</li>
+		</ul>
+		#set($pdrList= $vmTools.jsonToListMap($ReportMessage.pdrList))
+		#if($!ReportMessage.pdrList && $ReportMessage.pdrList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center" colspan="1">编号</th>
+				<th class="center" colspan="3">参保地</th>
+				<th class="center" colspan="3">参保日期</th>
+				<th class="center" colspan="3">累计缴费月数</th>
+				<th class="center" colspan="3">参加工作月份</th>
+				<th class="center" colspan="2">缴费状态</th>
+				<th class="center" colspan="3">个人缴费基数</th>
+				<th class="center" colspan="3">本月缴费金额</th>
+				<th class="center" colspan="3">信息更新日期</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			#foreach($item in $pdrList)
+			<tr>
+				<td class="center" colspan="1">$item.no</td>
+				<td class="center" colspan="3">$item.insuredPlace</td>
+				<td class="center" colspan="3">$item.insuredDate</td>
+				<td class="center" colspan="3">$item.payMonth</td>	
+				<td class="center" colspan="3">$item.workMonth</td>
+				<td class="center" colspan="2">$item.paymentStatus</td>
+				<td class="center" colspan="3">$item.socialInsuranceBase</td>	
+				<td class="center" colspan="3">$item.paymentAmount</td>	
+				<td class="center" colspan="3">$item.infoUpdateDate</td>	
+			</tr>
+			#end
+			</tbody>
+			
+			<thead>
+			<tr>
+				<th class="center" colspan="1">编号</th>
+				<th class="center" colspan="13">缴费单位</th>
+				<th class="center" colspan="10">中断或终止缴费原因</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $pdrList)
+			<tr>
+				<td class="center" colspan="1">$item.no</td>
+				<td class="center" colspan="13">$item.paymentUnit</td>
+				<td class="center" colspan="10">$item.interruptionReason</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">低保救助记录</li>
+		</ul>
+		#set($sarList= $vmTools.jsonToListMap($ReportMessage.sarList))
+		#if($!ReportMessage.sarList && $ReportMessage.sarList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">人员类别</th>
+				<th class="center">所在地</th>
+				<th class="center">工作单位</th>
+				<th class="center">家庭月收入</th>
+				<th class="center">申请日期</th>
+				<th class="center">批准日期</th>
+				<th class="center">信息更新日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $sarList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.personCategory</td>
+				<td class="center">$item.site</td>
+				<td class="center">$item.companyName</td>	
+				<td class="center">$item.familyIncome</td>
+				<td class="center">$item.applyDate</td>
+				<td class="center">$item.approvalDate</td>
+                <td class="center">$item.infoUpdateDate</td>					
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">执业资格记录</li>
+		</ul>
+		#set($pqrList= $vmTools.jsonToListMap($ReportMessage.pqrList))
+		#if($!ReportMessage.pqrList && $ReportMessage.pqrList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">执业资格名称</th>
+				<th class="center">等级</th>
+				<th class="center">获得日期</th>
+				<th class="center">到期日期</th>
+				<th class="center">吊销日期</th>
+				<th class="center">颁发机构</th>
+				<th class="center">机构所在地</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $pqrList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.qualificationName</td>
+				<td class="center">$item.level</td>
+				<td class="center">$item.getDate</td>	
+				<td class="center">$item.maturityDate</td>
+				<td class="center">$item.revocationDate</td>
+				<td class="center">$item.issuingAgency</td>
+                <td class="center">$item.institutionLocation</td>					
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">行政奖励记录</li>
+		</ul>
+		#set($arrList= $vmTools.jsonToListMap($ReportMessage.arrList))
+		#if($!ReportMessage.arrList && $ReportMessage.arrList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">奖励机构</th>
+				<th class="center">奖励内容</th>
+				<th class="center">生效日期</th>
+				<th class="center">截止日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $arrList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.rewardOrganization</td>
+				<td class="center">$item.rewardContent</td>
+				<td class="center">$item.effectiveDate</td>	
+				<td class="center">$item.endDate</td>				
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">车辆交易和抵押记录</li>
+		</ul>
+		#set($mrList= $vmTools.jsonToListMap($ReportMessage.mrList))
+		#if($!ReportMessage.mrList && $ReportMessage.mrList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">车牌号码</th>
+				<th class="center">发动机号</th>
+				<th class="center">品牌</th>
+				<th class="center">车辆类型</th>
+				<th class="center">使用性质</th>
+				<th class="center">车辆状态</th>
+				<th class="center">抵押标记</th>
+				<th class="center">信息更新日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $mrList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.licensePlate</td>
+				<td class="center">$item.engineNum</td>
+				<td class="center">$item.brand</td>	
+				<td class="center">$item.vehicleType</td>
+				<td class="center">$item.useProperty</td>	
+				<td class="center">$item.vehicleState</td>	
+				<td class="center">$item.mortgageTag</td>	
+				<td class="center">$item.infoUpdateDate</td>					
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<ul class="list-inline center">
+			<li class="blue">电信缴费记录</li>
+		</ul>
+		#set($tprList= $vmTools.jsonToListMap($ReportMessage.tprList))
+		#if($!ReportMessage.tprList && $ReportMessage.tprList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center" colspan="1">编号</th>
+				<th class="center" colspan="5">电信运营商</th>
+				<th class="center" colspan="3">业务类型</th>
+				<th class="center" colspan="3">业务开通日期</th>
+				<th class="center" colspan="3">当前缴费状态</th>
+				<th class="center" colspan="2">当前欠费金额</th>
+				<th class="center" colspan="5">当前欠费月数</th>
+				<th class="center" colspan="3">记账年月</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $tprList)
+			<tr>
+				<td class="center" colspan="1">$item.no</td>
+				<td class="center" colspan="5">$item.telecomOperators</td>
+				<td class="center" colspan="3">$item.serviceType</td>
+				<td class="center" colspan="3">$item.openingDate</td>	
+				<td class="center" colspan="3">$item.currentPayStatus</td>
+				<td class="center" colspan="2">$item.arrearsAmount</td>	
+				<td class="center" colspan="5">$item.arrearsMonth</td>
+				<td class="center" colspan="3">$item.journalEntry</td>					
+			</tr>
+			#if($item.payRecord)
+			<thead>
+			<tr>
+				<th class="center" colspan="25">最近24个月缴费记录</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				#if($item.payRecord)
+				<td class="center">$item.no</td>
+				#foreach($n in $item.payRecord.split(" "))
+				<td class="center">$n</td>
+				#end
+				#end
+			</tr>
+			</tbody>
+			#end
+			#end
+		</table>
+		#end
+		
+		<div class="page-header center">
+			<h4>五 本人声明</h4>
+		</div>
+		#set($sdList= $vmTools.jsonToListMap($ReportMessage.sdList))
+		#if($!ReportMessage.sdList && $ReportMessage.sdList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">声明内容</th>
+				<th class="center">添加日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $sdList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.declareContent</td>
+				<td class="center">$item.addDate</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+		
+		<div class="page-header center">
+			<h4>六 异议标注</h4>
+		</div>
+		#set($olList= $vmTools.jsonToListMap($ReportMessage.olList))
+		#if($!ReportMessage.olList && $ReportMessage.olList != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">标注内容</th>
+				<th class="center">添加日期</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $olList)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.lableContent</td>
+				<td class="center">$item.addDate</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+
+		<div class="page-header center">
+			<h4>七 查询记录</h4>
+		</div>
+
+		<ul class="list-inline center">
+			<li class="blue">查询记录汇总</li>
+		</ul>
+		#set($queryRecordSum= $ReportMessage.queryRecordSum)
+		#if($!ReportMessage.queryRecordSum && $ReportMessage.queryRecordSum != '{}')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center" colspan="2">最近1个月内的查询机构数</th>
+				<th class="center" colspan="3">最近1个月内的查询次数</th>
+				<th class="center" colspan="3">最近2年内的查询次数</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="center">贷款审批</td>
+				<td class="center">信用卡审批</td>
+				<td class="center">贷款审批</td>
+				<td class="center">信用卡审批</td>
+				<td class="center">本人查询</td>
+				<td class="center">贷后管理</td>
+				<td class="center">担保资格审查</td>
+				<td class="center">特约商户实名审查</td>
+			</tr>
+			<tr>
+				<td class="center">$queryRecordSum.last1MonthsOrgLoanApprovalSum</td>
+				<td class="center">$queryRecordSum.last1MonthsOrgCreditCardApprovalSum</td>
+				<td class="center">$queryRecordSum.last1MonthsLoanApprovalSum</td>
+				<td class="center">$queryRecordSum.last1MonthsCreditCardApprovalSum</td>
+				<td class="center">$queryRecordSum.selfQuery</td>
+				<td class="center">$queryRecordSum.last2YearsLoanMangeSum</td>
+				<td class="center">$queryRecordSum.last2YearsGuarApproSum</td>
+				<td class="center">$queryRecordSum.last2YearsSpeMerchApproSum</td>
+			</tr>
+			</tbody>
+		</table>
+		#end
+
+		#set($creditLoanApproQueryDetailed= $vmTools.jsonToListMap($ReportMessage.creditLoanApproQueryDetailed))
+		<ul class="list-inline center">
+			<li class="blue">信贷审批查询记录明细</li>
+		</ul>
+		#if($!ReportMessage.creditLoanApproQueryDetailed && $ReportMessage.creditLoanApproQueryDetailed != '[]')
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th class="center">编号</th>
+				<th class="center">查询日期</th>
+				<th class="center">查询操作员</th>
+				<th class="center">查询原因</th>
+			</tr>
+			</thead>
+			<tbody>
+			#foreach($item in $creditLoanApproQueryDetailed)
+			<tr>
+				<td class="center">$item.no</td>
+				<td class="center">$item.queryDate</td>
+				<td class="center">$item.queryOperator</td>
+				<td class="center">$item.queryReason</td>
+			</tr>
+			#end
+			</tbody>
+		</table>
+		#end
+
+		<ul class="list-inline center">
+			<li class="blue">报告说明</li>
+		</ul>
+		<p>
+			1.本报告由中国人民银行征信中心出具，依据截至报告时间个人征信系统记录的信息生成。除查询记录外，其他信息均由相关机构提供，征信中心不保证其真实性和准确性，但承诺在信息汇总、加工、整合的全过程中保持客观、中立的地位。</p>
+
+		<p>2.本报告中的“数字解读”仅供使用本信用报告的银行等授信机构参考，授信机构应自行承担使用“数字解读”的相关法律责任。</p>
+
+		<p>3.“数字解读”是将信用报告内容解读为一个数值，反映了消费者信贷违约的可能性；“相对位置”是消费者的数字解读值在全部人群中的百分比排序位置；“说明”中的“影响因素”是影响消费者获得更高数字解读值的原因。</p>
+
+		<p>4.本报告中如果没有"逾期及违约信息概要"信息，说明消费者最近5年内没有连续逾期。 本报告中如果没有"逾期及违约信息概要"信息，说明消费者最近5年内没有连续逾期。</p>
+
+		<p>5.本报告中的金额类数据均以人民币计算，精确到元。</p>
+
+		<p>6.本报告不展示5年前已经结束的逾期及违约行为，以及5年前的欠税记录、强制执行记录、民事判决记录、行政处罚记录、电信欠费记录。</p>
+
+		<p>7.贷款（发卡）机构说明是数据报送机构对具体业务添加的特别说明信息。</p>
+
+		<p>8.本人声明是消费者对信用报告中的信息所附注的简要说明，消费者对本人声明的真实性负责。</p>
+
+		<p>9.异议标注是征信中心添加的，用于说明消费者对信用报告中的哪些信息有异议，以及商业银行对异议信息的核实情况。</p>
+		
+		<p>10.本报告内容涉及个人隐私，查询者应依法使用、妥善保管。因使用不当造成个人隐私泄露的，征信中心将不承担相关责任。</p>
+
+	</div>
+</div>
