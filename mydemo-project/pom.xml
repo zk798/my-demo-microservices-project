@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>velocity-project</module>
-        <module>velocity-project-new</module>
-        <module>velocity-web-project</module>
+<!--        <module>velocity-project-new</module>
+        <module>velocity-web-project</module>-->
         <module>concurrent-project</module>
     </modules>
 
