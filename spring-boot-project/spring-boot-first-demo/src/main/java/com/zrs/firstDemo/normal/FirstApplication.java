@@ -1,18 +1,17 @@
-package com.zrs.firstDemo;
+package com.zrs.firstDemo.normal;
 
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.context.WebServerApplicationContext;
-import org.springframework.boot.web.context.WebServerInitializedEvent;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.event.EventListener;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = Test.class)
 public class FirstApplication {
+
+
 
     public static void main(String[] args) {
         SpringApplication.run(FirstApplication.class,args);
+
     }
 
 //    @Bean

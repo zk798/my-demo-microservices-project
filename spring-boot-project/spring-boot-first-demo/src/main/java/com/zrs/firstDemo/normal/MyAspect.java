@@ -1,4 +1,4 @@
-package com.zrs.firstDemo;
+package com.zrs.firstDemo.normal;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class MyAspect {
 
     //配置切入点,该方法无方法体,主要为方便同类中其他方法使用此处配置的切入点
-    @Pointcut("execution(* com.zrs.firstDemo.T*..*(..))")
+    @Pointcut("execution(* com.zrs.firstDemo.normal.Test.get(..))")
     public void aspect(){ }
     /*
      * 配置前置通知,使用在方法 aspect()上注册的切入点
@@ -30,10 +30,11 @@ public class MyAspect {
     }
     //配置环绕通知,使用在方法 aspect()上注册的切入点
     @Around("aspect()")
-    public void around(JoinPoint joinPoint){
+    public Object around(JoinPoint joinPoint){
         long start = System.currentTimeMillis();
+        Object proceed = null;
         try {
-            ((ProceedingJoinPoint) joinPoint).proceed();
+             proceed = ((ProceedingJoinPoint) joinPoint).proceed();
             long end = System.currentTimeMillis();
 
             log.info("around 通知 " + joinPoint + "\tUse time : " + (end - start) + " ms!");
@@ -41,6 +42,7 @@ public class MyAspect {
             long end = System.currentTimeMillis();
             log.info("around 通知 " + joinPoint + "\tUse time : " + (end - start) + " ms with exception :" + e.getMessage());
         }
+        return proceed;
     }
     //配置后置返回通知,使用在方法 aspect()上注册的切入点
     @AfterReturning("aspect()")
