@@ -1,6 +1,4 @@
-package com.zrs.firstDemo;
-
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+package com.zrs.firstDemo.normal;
 
 import java.util.EventObject;
 
