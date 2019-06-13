@@ -13,6 +13,8 @@
         <module>db-project</module>
         <module>concurrent-project</module>
         <module>spring-boot-project</module>
+        <module>th3-project</module>
+        <module>jvm-project</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -25,6 +25,7 @@ public class NioServer {
 
             int n = selector.select();
             if(n == 0){
+                System.out.print(0);
                 continue;
             }
 
