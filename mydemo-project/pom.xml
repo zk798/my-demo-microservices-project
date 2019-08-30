@@ -16,6 +16,7 @@
 <!--        <module>velocity-project-new</module>
         <module>velocity-web-project</module>-->
         <module>concurrent-project</module>
+        <module>pool-project</module>
     </modules>
 
     <dependencies>
