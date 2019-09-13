@@ -1,5 +1,8 @@
 package com.zrs.concurrent;
 
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.ArrayList;
 import java.util.concurrent.*;
 import java.util.logging.Logger;
 
@@ -194,11 +197,100 @@ public class CyclicBarrierDemo {
     }
 
 
-    public static void main(String[] args) {
-        try {
-            new CyclicBarrierDemo().test2();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+//        try {
+//            new CyclicBarrierDemo().test2();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+//        ThreadPoolExecutor executorService = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+//
+//        TimeUnit.SECONDS.sleep(10);
+//
+//        for (long i = 0; i <100000000 ; i++) {
+//            Thread thread = new Thread(() -> {
+//
+//                Long[] bytes = new Long[1024];
+//                System.out.println(bytes.length);
+//                try {
+//                    TimeUnit.SECONDS.sleep(2);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            });
+//            executorService.execute(thread);
+////            Future<?> submit = executorService.submit(thread);
+//            if(i%100000==0){
+//                System.out.println(i);
+//
+//            }
+//
+//        }
+//
+//        System.out.println("end");
+//
+//
+//        ThreadPoolTaskExecutor task = new ThreadPoolTaskExecutor();
+
+        ThreadPoolExecutor pool =
+                new ThreadPoolExecutor(2,10,3,TimeUnit.SECONDS,
+                        new ArrayBlockingQueue<>(10),
+                        r -> new Thread(r,"a-"+Thread.currentThread().getName()),
+                        (r, executor) -> {
+
+                        }
+                );
+
+        pool.execute(()->{
+            for (int i = 1; i <= 15; i++) {
+                int finalI = i;
+                pool.execute(()->{
+                    try {
+                        TimeUnit.SECONDS.sleep(finalI);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        });
+
+
+        pool.execute(()->{
+            while (true) {
+                System.out.println(pool);
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        pool.execute(()->{
+            try {
+                TimeUnit.SECONDS.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (int i = 1; i <= 20; i++) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                int finalI = i;
+                pool.execute(()->{
+                    try {
+                        TimeUnit.SECONDS.sleep(finalI);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        });
+
+
     }
 }
